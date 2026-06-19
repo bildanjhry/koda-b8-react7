@@ -1,16 +1,44 @@
-# React + Vite
+# Todo List
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Program todo list menggunakan React Js dan data akan disimpan di local storage.
 
-Currently, two official plugins are available:
+### Tech Stacks:
+- React Js v19x.x.x
+- TailwindCSS v4.X.X
+- Vite v4.x.x
+- Eslint v10.x.x
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+### Add data to local storage:
 
-## React Compiler
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```jsx
+	function handleAddTask(e){
+		e.preventDefault()
+		let newData = []
+		const task = new FormData(e.target)
 
-## Expanding the ESLint configuration
+		const newTask = {
+			name: task.get("task"),
+			completed: false
+		}
+		if(listByDay?.list.length > 0) newData = [...listByDay.list]
+		newData.push(newTask)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+		const todoList = {
+			day:day,
+			list:newData
+		}
+		setData([...data, todoList]) // append new data
+
+		// eliminate the same data by day
+		const newDataList = data.filter((item) => item.day !== day)
+
+		newDataList.push(todoList)
+		window.localStorage.setItem("todo", JSON.stringify(newDataList))
+		inputRef.current.value = ""
+
+	}
+```
+
+### Preview demo:
+![alt text](/src/assets/todolist.gif)
